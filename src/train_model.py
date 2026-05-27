@@ -1,10 +1,16 @@
 import pandas as pd
 import os
+import joblib
+
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from imblearn.over_sampling import SMOTE
+from sklearn.metrics import accuracy_score
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
-import joblib
+
+from imblearn.over_sampling import SMOTE
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,7 +32,7 @@ column_names = [
 
 data = pd.read_csv(data_path, names=column_names)
 
-# Map attack categories
+# ---------------- ATTACK MAPPING ----------------
 attack_mapping = {
 'normal':'normal',
 'neptune':'DoS','smurf':'DoS','back':'DoS','teardrop':'DoS','pod':'DoS','land':'DoS',
@@ -38,37 +44,69 @@ attack_mapping = {
 
 data['label'] = data['label'].map(attack_mapping)
 
+# ---------------- FEATURES & LABELS ----------------
 X = data.drop(['label', 'difficulty'], axis=1)
 y = data['label']
 
-# Encode features
+# ---------------- ENCODE FEATURES ----------------
 encoder = LabelEncoder()
+
 for col in X.columns:
     if X[col].dtype == 'object':
         X[col] = encoder.fit_transform(X[col])
 
-# Encode labels
+# ---------------- ENCODE LABELS ----------------
 label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(y)
 
-# Split
+# ---------------- SPLIT ----------------
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y_encoded, test_size=0.2, random_state=42
+    X,
+    y_encoded,
+    test_size=0.2,
+    random_state=42
 )
 
-# SMOTE
+# ---------------- SMOTE ----------------
 smote = SMOTE(random_state=42)
 X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
 
-# Train model
-model = XGBClassifier(n_estimators=200, max_depth=6, eval_metric='mlogloss')
-model.fit(X_resampled, y_resampled)
+# ---------------- MODELS ----------------
+dt_model = DecisionTreeClassifier(random_state=42)
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+xgb_model = XGBClassifier(
+    n_estimators=200,
+    max_depth=6,
+    eval_metric='mlogloss'
+)
 
-# Save model
+# ---------------- TRAIN ----------------
+print("Training Decision Tree...")
+dt_model.fit(X_resampled, y_resampled)
+
+print("Training Random Forest...")
+rf_model.fit(X_resampled, y_resampled)
+
+print("Training XGBoost...")
+xgb_model.fit(X_resampled, y_resampled)
+
+# ---------------- ACCURACY ----------------
+dt_acc = accuracy_score(y_test, dt_model.predict(X_test))
+rf_acc = accuracy_score(y_test, rf_model.predict(X_test))
+xgb_acc = accuracy_score(y_test, xgb_model.predict(X_test))
+
+print("\nMODEL ACCURACY COMPARISON")
+print("--------------------------------")
+print(f"Decision Tree Accuracy : {dt_acc:.4f}")
+print(f"Random Forest Accuracy: {rf_acc:.4f}")
+print(f"XGBoost Accuracy      : {xgb_acc:.4f}")
+
+# ---------------- SAVE MODELS ----------------
 models_dir = os.path.join(BASE_DIR, "models")
 os.makedirs(models_dir, exist_ok=True)
 
-model_path = os.path.join(models_dir, "xgb_model.pkl")
-joblib.dump(model, model_path)
+joblib.dump(dt_model, os.path.join(models_dir, "decision_tree.pkl"))
+joblib.dump(rf_model, os.path.join(models_dir, "random_forest.pkl"))
+joblib.dump(xgb_model, os.path.join(models_dir, "xgb_model.pkl"))
 
-print("Model trained and saved successfully!")
+print("\nModels saved successfully!")

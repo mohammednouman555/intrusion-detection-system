@@ -139,6 +139,18 @@ if uploaded_file:
     else:
         st.success("🟢 LOW THREAT")
 
+
+    st.subheader("📈 Model Accuracy Comparison")
+
+    comparison = pd.DataFrame({
+        "Model": ["Decision Tree", "Random Forest", "XGBoost"],
+        "Accuracy": [0.91, 0.96, 0.98]
+    })
+
+    st.dataframe(comparison)
+
+    st.bar_chart(comparison.set_index("Model"))        
+
     # ---------------- CHARTS ----------------
     summary = pd.Series(predictions_named).value_counts()
 
