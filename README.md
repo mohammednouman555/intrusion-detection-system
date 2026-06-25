@@ -1,274 +1,332 @@
----
-
-# 🔐 AI-Driven Intrusion Detection System (IDS)
-
----
+# 🔐 AI-Driven Intrusion Detection System for Network Security with Explainable Intelligence and Real-Time Analytics
 
 ## 📌 Overview
 
-This project is an AI-based Intrusion Detection System (IDS) designed to analyze network traffic and detect malicious activities. It leverages machine learning techniques to classify traffic into different categories such as Normal, DoS, Probe, R2L, and U2R attacks.
+This project is an AI-powered Intrusion Detection System (IDS) designed to monitor and analyze network traffic to detect malicious activities and cyber attacks in real-time.
 
-### The system integrates:
+The system uses Machine Learning algorithms such as:
 
-- XGBoost for high-accuracy classification
+* Decision Tree
+* Random Forest
+* XGBoost
 
-- SMOTE for handling imbalanced data
+to classify network traffic into:
 
--FastAPI for real-time backend predictions
+* Normal
+* DoS
+* Probe
+* R2L
+* U2R
 
--Streamlit for an interactive dashboard
+The project integrates:
 
-- SHAP for explainable AI
-
----
-
-## 🚀 Features
-
-- 📊 Detects multiple types of cyber attacks
-
-- ⚖️ Handles imbalanced datasets using SMOTE
-
-- ⚡ Real-time prediction via FastAPI
-
-- 🖥️ Interactive Streamlit dashboard
-
-- 📈 Visualizations (Bar Chart, Pie Chart)
-
-- 🚨 Threat alert system
-
-- 🧠 Explainable AI using SHAP
-
-
+* FastAPI backend for prediction
+* Streamlit dashboard for visualization
+* SMOTE for handling imbalanced datasets
+* SHAP for Explainable AI
 
 ---
 
-## 🧠 Technologies Used
+# 🚀 Features
 
-- Python
-
-- Pandas, NumPy
-
-- Scikit-learn
-
-- XGBoost
-
-- Imbalanced-learn (SMOTE)
-
-- FastAPI
-
-- Streamlit
-
-- Matplotlib
-
-- SHAP
-
-- Joblib
+✅ Real-time intrusion detection
+✅ Multiple ML model comparison
+✅ XGBoost-based high accuracy detection
+✅ FastAPI backend integration
+✅ Interactive Streamlit dashboard
+✅ Attack visualization using charts
+✅ Explainable AI using SHAP
+✅ User-friendly UI
+✅ Threat monitoring and analytics
 
 ---
 
-## 📂 Project Structure
-```
+# 🧠 Technologies Used
+
+## Programming Language
+
+* Python
+
+## Machine Learning
+
+* Scikit-learn
+* XGBoost
+* SMOTE (Imbalanced-learn)
+
+## Backend
+
+* FastAPI
+* Uvicorn
+
+## Frontend
+
+* Streamlit
+
+## Data Processing
+
+* Pandas
+* NumPy
+
+## Visualization
+
+* Matplotlib
+
+## Explainable AI
+
+* SHAP
+
+## Model Saving
+
+* Joblib
+
+---
+
+# 📂 Project Structure
+
+```text id="mznp7z"
 IDS_Project_AI/
-│
-├── data/
-│   ├── KDDTrain+.txt
-│   ├── KDDTest+.txt
-│
-├── models/
-│   └── xgb_model.pkl
-│
-├── src/
-│   ├── train_model.py
-│   ├── api.py
 │
 ├── app/
 │   └── app.py
 │
+├── src/
+│   ├── api.py
+│   └── train_model.py
+│
+├── data/
+│   ├── KDDTrain+.txt
+│   └── KDDTest+.csv
+│
+├── models/
+│   ├── decision_tree.pkl
+│   ├── random_forest.pkl
+│   └── xgb_model.pkl
+│
 ├── requirements.txt
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+# 📊 Dataset
 
-1️⃣ Clone Repository
+The project uses the **NSL-KDD Dataset**, a benchmark dataset widely used for intrusion detection research.
 
-git clone https://github.com/your-username/IDS_Project_AI.git
-cd IDS_Project_AI
+## Attack Categories
 
+* Normal
+* DoS
+* Probe
+* R2L
+* U2R
 
 ---
 
-2️⃣ Create Virtual Environment
+# ⚙️ Installation & Setup
 
+## 1️⃣ Clone Repository
+
+```bash id="ax0lr9"
+git clone https://github.com/mohammednouman555/intrusion-detection-system.git
+```
+
+```bash id="0t2iwy"
+cd intrusion-detection-system
+```
+
+---
+
+## 2️⃣ Create Virtual Environment
+
+```bash id="svv3xq"
 python -m venv venv
+```
+
+## Activate Virtual Environment
+
+### Windows
+
+```bash id="5r4jkq"
 venv\Scripts\activate
-
+```
 
 ---
 
-3️⃣ Install Dependencies
+## 3️⃣ Install Dependencies
 
+```bash id="k74db5"
 pip install -r requirements.txt
-
-
----
-
-📊 Dataset
-
-This project uses the NSL-KDD dataset for training and testing.
-
-Place files inside data/:
-
-KDDTrain+.txt
-KDDTest+.txt
-
+```
 
 ---
 
-### 🏋️ Model Training
+# 🏋️ Train Machine Learning Models
 
-Run the training script:
+Run:
 
-- python src/train_model.py
+```bash id="s6e70u"
+python src/train_model.py
+```
 
-✔ This will:
+This will:
 
-- Load dataset
-
-- Preprocess data
-
-- Apply SMOTE
-
-- Train XGBoost model
-
-- Save model to models/xgb_model.pkl
-
+* Load dataset
+* Preprocess data
+* Apply SMOTE
+* Train multiple ML models
+* Compare accuracies
+* Save trained models
 
 ---
 
-### 🌐 Run Backend (FastAPI)
+# 📈 Model Accuracy Comparison
 
-- uvicorn src.api:app --reload
-
-Access API at:
-
-- http://127.0.0.1:8000
-
-
----
-
-### 🖥️ Run Frontend (Streamlit)
-
-- streamlit run app/app.py
-
-Open in browser:
-
-- http://localhost:8501
-
+| Model         | Accuracy |
+| ------------- | -------- |
+| Decision Tree | 99.70%   |
+| Random Forest | 99.88%   |
+| XGBoost       | 99.90%   |
 
 ---
 
-### 🔐 Login Credentials
+# 🌐 Run FastAPI Backend
 
+```bash id="d0rn5e"
+uvicorn src.api:app --reload
+```
+
+Backend URL:
+
+```text id="q63upz"
+http://127.0.0.1:8000
+```
+
+Swagger Documentation:
+
+```text id="ujpmz9"
+http://127.0.0.1:8000/docs
+```
+
+---
+
+# 🖥️ Run Streamlit Dashboard
+
+```bash id="vow26z"
+streamlit run app/app.py
+```
+
+Dashboard URL:
+
+```text id="jlwmz"
+http://localhost:8501
+```
+
+---
+
+# 🔐 Login Credentials
+
+```text id="kxtswt"
 Password: admin123
-
-
----
-
-## 📤 Usage
-
-1. Run backend and frontend
-
-
-2. Login to dashboard
-
-
-3. Upload dataset (KDDTest+.csv)
-
-
-4. View:
-
-- Predictions
-
-- Attack distribution
-
-- Alerts
-
-- SHAP explainability
-
-
-
----
-
-## 🔁 System Workflow
-```
-Dataset → Preprocessing → SMOTE → XGBoost Model
-→ FastAPI → Streamlit Dashboard → Predictions → Visualization
 ```
 
 ---
 
-## 📈 Output
+# 📤 Usage
 
-- Attack classification (DoS, Probe, R2L, U2R, Normal)
+1. Run FastAPI server
+2. Run Streamlit dashboard
+3. Login using password
+4. Upload `KDDTest+.csv` dataset
+5. View:
 
-- Graphs (bar & pie charts)
-
-- Threat alerts
-
-- Feature importance (SHAP)
-
-
----
-
-## 🏆 Results
-
-- High accuracy achieved
-
-- Improved detection of minority attacks
-
-- Real-time monitoring enabled
-
-- Transparent decision-making using SHAP
-
+   * Attack predictions
+   * Threat analytics
+   * Pie charts
+   * Bar charts
+   * Accuracy comparison
+   * SHAP explanations
 
 ---
 
-## 🔮 Future Enhancements
+# 🔁 System Workflow
 
-- Real-time packet capture
-
-- Deep learning models
-
-- Cloud deployment
-
-- Integration with SIEM systems
-
-- Automated threat response
-
-
----
-
-## 👨‍💻 Author
-
-Mohammed Nouman
-Computer Science Engineering
-
+```text id="v7wt9j"
+Dataset
+→ Data Preprocessing
+→ SMOTE Balancing
+→ ML Model Training
+→ Accuracy Comparison
+→ FastAPI Backend
+→ Streamlit Dashboard
+→ Prediction & Visualization
+```
 
 ---
 
-## 📜 License
+# 🧠 Explainable AI (SHAP)
 
-This project is for academic and educational purposes.
+SHAP (SHapley Additive exPlanations) is used to explain model predictions and identify which features contribute most to attack detection.
 
+Benefits:
+
+* Transparency
+* Better understanding of predictions
+* Improved trust in AI decisions
+
+---
+
+# 📊 Dashboard Features
+
+✅ File Upload System
+✅ Attack Detection
+✅ Bar Charts
+✅ Pie Charts
+✅ Accuracy Comparison Graph
+✅ Threat Monitoring
+✅ Real-time Prediction
 
 ---
 
-## ⭐ Final Note
+# 🏆 Project Highlights
 
-This project demonstrates how AI + Cybersecurity + Explainable AI can be combined to build a powerful and practical intrusion detection system.
-
+* AI-powered cybersecurity solution
+* Real-time intrusion monitoring
+* High detection accuracy
+* Multiple ML algorithm comparison
+* Explainable AI integration
+* Professional dashboard interface
 
 ---
+
+# 🔮 Future Enhancements
+
+* Real-time packet sniffing
+* Deep learning integration
+* Cloud deployment
+* SIEM integration
+* Automated threat response
+* Live network traffic analysis
+
+---
+
+# 👨‍💻 Authors
+
+* Mohammed Nouman
+* Mohammed Mudassir
+* Uzair Ali Hashmi
+
+Department of Computer Science Engineering
+Deccan College of Engineering and Technology
+
+---
+
+# 📜 License
+
+This project is developed for academic and educational purposes.
+
+---
+
+# ⭐ Conclusion
+
+This project demonstrates how Artificial Intelligence and Machine Learning can be effectively integrated with cybersecurity systems to build a powerful, intelligent, and real-time intrusion detection solution with high accuracy and explainability.
